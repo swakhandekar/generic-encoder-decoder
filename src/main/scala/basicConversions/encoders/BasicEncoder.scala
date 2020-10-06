@@ -1,4 +1,6 @@
-package basicConversions
+package basicConversions.encoders
+
+import basicConversions.{BasicValue, MapValue}
 
 trait BasicEncoder[T] {
   def encode(o: T): BasicValue

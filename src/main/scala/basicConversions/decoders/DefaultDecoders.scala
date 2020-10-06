@@ -1,5 +1,6 @@
-package basicConversions
+package basicConversions.decoders
 
+import basicConversions._
 import shapeless.labelled.{FieldBuilder, FieldType}
 import shapeless.{::, HList, HNil, LabelledGeneric, Lazy, Witness}
 
@@ -44,6 +45,7 @@ object DefaultDecoders {
     override def decode(b: BasicValue): T = {
       b match {
         case x: MapValue => gen.from(mpToHList.convert(x.m))
+        case _  => throw new RuntimeException("Failed while creating BasicMapDecoder as provided value is not a MapValue")
       }
     }
   }

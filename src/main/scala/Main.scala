@@ -1,8 +1,10 @@
-import basicConversions.BasicMapDecoder.decodeMap
-import basicConversions.BasicEncoder.toBasicMap
-import basicConversions.{BasicDecoder, BasicEncoder, StringValue}
-import basicConversions.DefaultEncoders._
-import basicConversions.DefaultDecoders._
+import basicConversions.StringValue
+import basicConversions.decoders.BasicDecoder
+import basicConversions.decoders.BasicMapDecoder.decodeMap
+import basicConversions.encoders.BasicEncoder
+import basicConversions.encoders.BasicEncoder.toBasicMap
+import basicConversions.encoders.DefaultEncoders._
+import basicConversions.decoders.DefaultDecoders._
 import models._
 
 object Main extends App {
@@ -14,9 +16,11 @@ object Main extends App {
 
   implicit val basicDecoder: BasicDecoder[InfectionState] = {
     case StringValue(s) => if (s == "Infected") Infected else if (s == "Susceptible") Susceptible else Recovered
+    case _ => throw new RuntimeException("Will never reach here")
   }
 
-  val cAgent = ComplexAgent("Haresh", 45, Infected)
+  val city = City("Karad", 34567)
+  val cAgent = CompositeAgent("Haresh", 45, city)
 
   val basicMapRepresentation = toBasicMap(cAgent)
 
@@ -31,6 +35,6 @@ object Main extends App {
   println("===============================")
   println("===============================")
 
-  val x = decodeMap[ComplexAgent](mapRepr)
+  val x: CompositeAgent = decodeMap[CompositeAgent](mapRepr)
   println(x)
 }

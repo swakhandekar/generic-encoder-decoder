@@ -1,5 +1,6 @@
-package basicConversions
+package basicConversions.encoders
 
+import basicConversions._
 import shapeless.labelled.FieldType
 import shapeless.{::, HList, HNil, Lazy, Witness}
 
