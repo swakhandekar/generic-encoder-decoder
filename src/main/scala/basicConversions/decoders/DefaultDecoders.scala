@@ -40,8 +40,8 @@ object DefaultDecoders {
   }
 
   implicit def mapDecoder[T, H <: HList](implicit gen: LabelledGeneric.Aux[T, H],
-                                         mpToHList: MapConverter[H]): BasicMapDecoder[T] = {
-    case x: MapValue => gen.from(mpToHList.convert(x.m))
+                                         mpToHList: Lazy[MapConverter[H]]): BasicMapDecoder[T] = {
+    case x: MapValue => gen.from(mpToHList.value.convert(x.m))
     case _ => throw new RuntimeException("Failed while creating BasicMapDecoder as provided value is not a MapValue")
   }
 }
