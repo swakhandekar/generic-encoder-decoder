@@ -44,7 +44,36 @@ private[basicConversions] object BasicValue {
       case x: ListValue => x.toList
       case x: MapValue => x.toMap
 
-      case NoValue() => ""
+      case NoValue() => null
     }
+  }
+
+  def fromMap(m: Map[String, Any]): Map[String, BasicValue] = {
+    m.map(kv => {
+      val value = kv._2
+      val typedValue: BasicValue = toAnyValue(value)
+
+      (kv._1, typedValue)
+    })
+  }
+
+  private def toAnyValue(value: Any): BasicValue = {
+    value match {
+      case x: Int => IntValue(x)
+      case x: Float => FloatValue(x)
+      case x: Double => DoubleValue(x)
+
+      case x: Byte => ByteValue(x)
+      case x: Char => CharValue(x)
+      case x: String => StringValue(x)
+
+      case x: List[Any] => ListValue(fromList(x))
+      case x: Map[String, Any] => MapValue(fromMap(x))
+      case null => NoValue()
+    }
+  }
+
+  def fromList(list: List[_]): List[BasicValue] = {
+    list.map(x => toAnyValue(x))
   }
 }
