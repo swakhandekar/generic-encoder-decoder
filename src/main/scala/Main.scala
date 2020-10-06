@@ -22,19 +22,17 @@ object Main extends App {
   val city = City("Karad", 34567)
   val cAgent = CompositeAgent("Haresh", 45, city)
 
+  println("Source object: ", cAgent)
+  println("\n\nEncoding")
+
   val basicMapRepresentation = toBasicMap(cAgent)
 
-  println(basicMapRepresentation)
-
-  println("===============================")
-  println("===============================")
+  println("Basic value representation: ", basicMapRepresentation)
 
   private val mapRepr: Map[String, Any] = basicMapRepresentation.toMap
-  println(mapRepr)
+  println("Map representation: ", mapRepr)
 
-  println("===============================")
-  println("===============================")
-
+  println("\n\nDecoding")
   val x: CompositeAgent = decodeMap[CompositeAgent](mapRepr)
-  println(x)
+  println("Decoded object:", x)
 }
