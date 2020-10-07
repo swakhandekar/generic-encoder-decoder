@@ -19,7 +19,7 @@ object Main extends App {
     case _ => throw new RuntimeException("Will never reach here")
   }
 
-  val city = City("Karad", 34567)
+  val city = City("Karad", 34567, Map("infected" -> 123, "recovered" -> 567), List("Idk", "what"))
   val cAgent = CompositeAgent("Haresh", 45, city)
 
   println("Source object: ", cAgent)
@@ -33,6 +33,6 @@ object Main extends App {
   println("Map representation: ", mapRepr)
 
   println("\n\nDecoding")
-  val x: CompositeAgent = decodeMap[CompositeAgent](mapRepr)
+  val x = decodeMap[CompositeAgent](mapRepr)
   println("Decoded object:", x)
 }
